@@ -9,8 +9,8 @@ const Game = () => {
   const [xNext, setxNext] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [history, setHistory] = useState([{ value: "", row: "", col: "" }]);
-  const currentSquares = history[history.length - 1];
-  console.log(currentSquares);
+  // const currentSquares = history[history.length - 1];
+
   // Ham play
   function handlePlay(newSquares, row, col) {
     setHistory([...history, { squares: newSquares, position: { row, col } }]);
@@ -69,6 +69,10 @@ const Game = () => {
     const newSize = { ...size };
     newSize[event.target.name] = parseInt(event.target.value);
     setSize(newSize);
+    setHistory([{ value: "", row: "", col: "" }]);
+    setSquares(Array(size.rows * size.columns).fill(null));
+    setxNext(true);
+    setGameOver(false);
   };
 
   // Handle click
@@ -95,19 +99,25 @@ const Game = () => {
         <input
           type="number"
           name="rows"
-          min={3}
-          max={5}
+          min={0}
           value={size.rows}
-          onChange={handleChange}
+          onChange={(e) => {
+            if (e.target.value) {
+              handleChange(e);
+            }
+          }}
         />
         Hàng
         <input
           type="number"
           name="columns"
-          min={3}
-          max={5}
+          min={0}
           value={size.columns}
-          onChange={handleChange}
+          onChange={(e) => {
+            if (e.target.value) {
+              handleChange(e);
+            }
+          }}
         />
       </span>
       <div
@@ -123,6 +133,7 @@ const Game = () => {
         </span>
         <div
           className="game-board"
+          // chia space trong grid bang cot co kich thuoc = 1fr
           style={{ gridTemplateColumns: `repeat(${size.columns}, 1fr)` }}
         >
           <Board
@@ -137,7 +148,9 @@ const Game = () => {
             resetGame={resetGame}
           />
           <hr />
-          <button onClick={resetGame}>Reset Game</button>
+          <button onClick={resetGame} className="btn-reset">
+            Reset Game
+          </button>
         </div>
         <div></div>
       </div>

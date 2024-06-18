@@ -5,9 +5,9 @@
 }
 
 .square {
-  height: 13vh;
-  width: 13vh;
-  font-size: 11vh;
+  height: 10vh;
+  width: 10vh;
+  font-size: 8vh;
   font-weight: bold;
   border-radius: 5px;
   display: grid;
@@ -24,6 +24,11 @@
 
 .square.O {
   color: blue;
+}
+
+
+.square.winning {
+  background-color: yellow;
 }
 
 .game .board-row {
